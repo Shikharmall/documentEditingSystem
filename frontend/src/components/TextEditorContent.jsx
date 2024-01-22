@@ -4,12 +4,12 @@ import Quill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:5000"); // Replace with your server URL
+//const socket = io("http://localhost:5000"); // Replace with your server URL
 
 const TextEditorContent = () => {
   const [text, setText] = useState("");
 
-  useEffect(() => {
+  /* useEffect(() => {
     // Listen for text updates from the server
     socket.on("text-update", (data) => {
       setText(data);
@@ -18,14 +18,21 @@ const TextEditorContent = () => {
     return () => {
       socket.off("text-update");
     };
-  }, []);
+  }, []);*/
 
-  const handleTextChange = (content, _, source) => {
+  /*const handleTextChange = (content, _, source) => {
     if (source === "user") {
       // Send text updates to the server
       socket.emit("text-update", content);
     }
+  };*/
+
+  const handleTextChange = (content, delta, source, editor) => {
+    // Handle text changes here
+    setText(content);
   };
+
+  console.log(text);
 
   var toolbarOptions = [
     ["bold", "italic", "underline", "strike"], // toggled buttons
@@ -50,7 +57,14 @@ const TextEditorContent = () => {
     toolbar: toolbarOptions,
   };
 
-  return <Quill modules={module} value={text} onChange={handleTextChange} />;
+  return (
+    <Quill
+      modules={module}
+      value={text}
+      onChange={handleTextChange}
+      //readOnly={true}
+    />
+  );
 };
 
 export default TextEditorContent;
