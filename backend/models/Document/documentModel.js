@@ -1,12 +1,8 @@
 const mongoose = require("mongoose");
 
-const responseSchema = new mongoose.Schema(
+const documentSchema = new mongoose.Schema(
   {
     content: {
-      type: String,
-      required: true,
-    },
-    language: {
       type: String,
       required: true,
     },
@@ -16,6 +12,6 @@ const responseSchema = new mongoose.Schema(
   }
 );
 
-const Response = mongoose.model("Response", responseSchema);
+const Document = mongoose.model("Document", documentSchema);
 
-module.exports = Response;
+module.exports = Document;

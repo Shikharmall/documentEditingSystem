@@ -89,13 +89,11 @@ if (process.env.DATABASE === "MONGODBATLAS") {
 
 app.use(cookieParser());
 
-app.use(express.json()); 
+app.use(express.json());
 
 const cors = require("cors");
 
-let allowedOrigins = [
-  "http://localhost:5173",
-];
+let allowedOrigins = ["http://localhost:5173"];
 
 app.use(
   cors({
@@ -105,8 +103,9 @@ app.use(
 );
 
 const userRoutes = require("./routes/userRoute");
+const documentRoutes = require("./routes/documentRoute");
 
 app.use("/", userRoutes);
+app.use("/", documentRoutes);
 
 app.listen(port);
-

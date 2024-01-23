@@ -1,126 +1,29 @@
 var express = require("express");
-var user_route = express();
+var document_route = express();
 
-const isDDAdmin = require("../middleware/isVerified");
+//const isDDAdmin = require("../middleware/isVerified");
 
-const isLogin = require("../middleware/isLogin");
+//const isLogin = require("../middleware/isLogin");
 
 const userController = require("../controllers/User/userController");
-const questionController = require("../controllers/Document/documentController");
-const responseController = require("../controllers/Response/responseController");
+const documentController = require("../controllers/Document/documentController");
 
-const validateForm = require("../validation/validation");
+//const validateForm = require("../validation/validation");
 
 const bodyParser = require("body-parser");
-user_route.use(bodyParser.json());
-user_route.use(bodyParser.urlencoded({ extended: true }));
+document_route.use(bodyParser.json());
+document_route.use(bodyParser.urlencoded({ extended: true }));
 
-// api for register user
+// api for adding document
 
-user_route.post("/registerUser", validateForm, userController.registerUser);
+document_route.post("/addDocument", documentController.addDocument);
 
-// api for login
+// api for fetching document
 
-user_route.post("/login", userController.loginUser);
+document_route.get("/fetchDocument", documentController.getDocument);
 
-// api for getting user details
+// api for editing document
 
-user_route.get("/getUserDetails", isLogin, userController.getUserDetails);
+document_route.post("/editDocument", documentController.editDocument);
 
-// api for getting all user details
-
-user_route.get("/getAllUserDetails", isLogin, userController.getAllUserDetails);
-
-// api for adding question
-
-user_route.post(
-  "/addQuestion",
-  isLogin,
-  isDDAdmin,
-  questionController.addQuestion
-);
-
-// api for getting a question
-
-user_route.get("/getQuestion", isLogin, questionController.getQuestion);
-
-// api for getting all questions
-
-user_route.get(
-  "/getAllQuestions",
-  isLogin,
-  isDDAdmin,
-  questionController.getAllQuestions
-);
-
-// api for adding user response to database(db)
-
-user_route.post(
-  "/addResponseToUser",
-  isLogin,
-  responseController.addResponseToUser
-);
-
-// api for getting question by id
-
-user_route.get(
-  "/getQuestionByID",
-  isLogin,
-  isDDAdmin,
-  questionController.getQuestionByID
-);
-
-// api for getting all user details by language
-
-user_route.get(
-  "/getAllUserDetailsByLanguage",
-  isLogin,
-  userController.getAllUserDetailsByLanguage
-);
-
-// api for updating question
-
-user_route.patch(
-  "/updateQuestion",
-  isLogin,
-  isDDAdmin,
-  questionController.updateQuestion
-);
-
-// api for getting user response
-
-user_route.get("/getUserResponse", isLogin, responseController.getUserResponse);
-
-// api for getting user english response
-
-user_route.get(
-  "/getUserResponseEnglish",
-  isLogin,
-  responseController.getUserResponseEnglish
-);
-
-// api for getting user hindi response
-
-user_route.get(
-  "/getUserResponseHindi",
-  isLogin,
-  responseController.getUserResponseHindi
-);
-
-// api for getting user french response
-
-user_route.get(
-  "/getUserResponseFrench",
-  isLogin,
-  responseController.getUserResponseFrench
-);
-
-// api for resetting progress
-
-user_route.patch("/resetProgress", isLogin, responseController.resetProgress);
-
-// api for logout
-
-user_route.post("/logout", isLogin, userController.logout);
-
-module.exports = user_route;
+module.exports = document_route;

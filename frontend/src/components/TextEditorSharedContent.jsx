@@ -3,18 +3,20 @@ import Quill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { addDocumentAPI } from "../Api/DocumentAPI/DocumentAPI";
+import { addDocumentAPI, getDocumentAPI } from "../Api/DocumentAPI/DocumentAPI";
+import { useParams } from "react-router-dom";
 //import io from "socket.io-client";
 //const socket = io("http://localhost:5000"); // Replace with your server URL
 
-const TextEditorContent = () => {
+const TextEditorSharedContent = () => {
   const user_id = localStorage.getItem("user_id");
-  const [userId, setUserId] = useState("");
   const [formData, setFormData] = useState({
     text: "",
     user_id: "",
   });
   const [loader, setLoader] = useState(false);
+
+  const { document_id } = useParams();
 
   /* useEffect(() => {
     // Listen for text updates from the server
@@ -70,7 +72,6 @@ const TextEditorContent = () => {
     addDocumentAPI(formData).then((res) => {
       if (res.status === 201) {
         setLoader(false);
-        setFormData({ ...formData, content: "" });
       } else {
         setLoader(false);
         toast(res?.response?.data?.message);
@@ -81,9 +82,28 @@ const TextEditorContent = () => {
   useEffect(() => {
     if (user_id) {
       setFormData({ ...formData, user_id: user_id });
-      setUserId(user_id);
     }
   }, [user_id]);
+
+  const getDocumentFunc = async (document_id) => {
+    try {
+      const res = await getDocumentAPI(document_id);
+      if (res.status === 200) {
+        setFormData({ ...formData, content: res?.data?.data?.content });
+      } else {
+        console.error("Data Fetching Failed!");
+      }
+    } catch (error) {
+      console.error("Error fetching user details:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (document_id) {
+      getDocumentFunc(document_id);
+      //setFormData({ ...formData, content: content });
+    }
+  }, [document_id]);
 
   console.log(formData);
 
@@ -136,4 +156,4 @@ const TextEditorContent = () => {
   );
 };
 
-export default TextEditorContent;
+export default TextEditorSharedContent;

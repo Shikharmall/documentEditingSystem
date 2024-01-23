@@ -1,40 +1,69 @@
-const Question = require("../../models/Question/questionModel");
+const Document = require("../../models/Document/documentModel");
 
-//add question by dd admin
+//add document
 
-const addQuestion = async (req, res) => {
+const addDocument = async (req, res) => {
   try {
-    const { questions } = req.body;
+    const { content } = req.body;
 
-    if (questions.length === 0) {
-      return res
-        .status(409)
-        .json({ status: "failed", message: "Please Add Some Question" });
-    }
-
-    const questionPromises = questions.map(async (obj) => {
-      const questionData = new Question({
-        question: obj.question,
-        option1: obj.option1,
-        option2: obj.option2,
-        option3: obj.option3,
-        option4: obj.option4,
-        correctOption: obj.option1,
-        level: obj.level,
-        language: obj.language,
-      });
-      await questionData.save();
+    const documentData = new Document({
+      content: content,
     });
+    const documentAdded = await documentData.save();
 
-    await Promise.all(questionPromises);
-
-    return res
-      .status(201)
-      .json({ status: "success", message: "Questions added successfully" });
+    if (documentAdded) {
+      return res
+        .status(201)
+        .json({ status: "success", message: "Document Added Successfully." });
+    }
   } catch (error) {
     res.status(500).json({ status: "failed", message: error.message });
   }
 };
+
+//get document
+
+const getDocument = async (req, res) => {
+  try {
+    const { document_id } = req.query;
+
+    const documentData = await Document.findById({ _id: document_id });
+
+    if (documentData) {
+      return res.status(200).json({ status: "success", data: documentData });
+    }
+  } catch (error) {
+    res.status(500).json({ status: "failed", message: error.message });
+  }
+};
+
+//edit document
+
+const editDocument = async (req, res) => {
+  try {
+    const { content, user_id } = req.body;
+    const { document_id } = req.query;
+
+    const editDocument = await Document.findByIdAndUpdate(
+      { _id: document_id },
+      {
+        $set: {
+          content: content,
+        },
+      }
+    );
+
+    if (editDocument) {
+      return res
+        .status(201)
+        .json({ status: "success", message: "Document Editted Successfully." });
+    }
+  } catch (error) {
+    res.status(500).json({ status: "failed", message: error.message });
+  }
+};
+
+/*
 
 //get a question in game
 
@@ -115,7 +144,7 @@ const getQuestion = async (req, res) => {
   }
 };
 
-//get all questions 
+//get all questions
 
 const getAllQuestions = async (req, res) => {
   try {
@@ -180,12 +209,14 @@ const updateQuestion = async (req, res) => {
   } catch (error) {
     res.status(500).json({ status: "failed", message: error.message });
   }
-};
+};*/
 
 module.exports = {
-  addQuestion,
-  getQuestion,
+  addDocument,
+  getDocument,
+  editDocument,
+  /*getQuestion,
   getAllQuestions,
   getQuestionByID,
-  updateQuestion,
+  updateQuestion,*/
 };

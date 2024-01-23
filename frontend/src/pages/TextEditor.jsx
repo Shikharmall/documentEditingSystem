@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import Header from "../partials/Header";
-import TextEditorContent from "../components/TextEditorContent";
+import TextEditorSharedContent from "../components/TextEditorSharedContent";
 
 export default function TextEditor() {
-  
   return (
     <>
       <Header />
-      <TextEditorContent />
-      
+      <TextEditorSharedContent />
     </>
   );
 }
