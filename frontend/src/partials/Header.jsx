@@ -57,9 +57,9 @@ export default function Header() {
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto ">
           <div className="text-sm lg:flex-grow">
             <Link
-              to={{ pathname: `/newdocument/${"65b0145141bd6b1c5eedeef0"}` }}
+              to={{ pathname: `/` }}
               className={`block mt-4 lg:inline-block lg:mt-0 mr-4 ${
-                pathname.includes("/newdocument/")
+                pathname === "/"
                   ? "text-white hover:text-teal-200"
                   : "text-teal-200"
               }`}
