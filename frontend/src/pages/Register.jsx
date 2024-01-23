@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { userRegisterAPI } from "../Api/UserAPI/UserAPI";
 //import { Link, useNavigate } from "react-router-dom";
-//import Logo from "../images/logo.png";
-//import { userRegisterAPI } from "../Api/UserAPI/UserAPI";
 
 export default function Register({ loginPage }) {
   /*const navigate = useNavigate();
@@ -38,7 +37,8 @@ export default function Register({ loginPage }) {
     userRegisterAPI(formData).then((res) => {
       if (res.status === 201) {
         setLoader(false);
-        navigate("/");
+        loginPage();
+        //navigate("/");
       } else {
         setLoader(false);
         if (res?.response?.status === 400) {

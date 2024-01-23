@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Quill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import io from "socket.io-client";
+//import io from "socket.io-client";
 
 //const socket = io("http://localhost:5000"); // Replace with your server URL
 
@@ -66,8 +66,6 @@ const TextEditorContent = () => {
         onChange={handleTextChange}
         //readOnly={true}
       />
-
-      
     </>
   );
 };

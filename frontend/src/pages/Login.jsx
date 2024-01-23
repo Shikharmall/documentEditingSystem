@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { userLoginAPI } from "../Api/UserAPI/UserAPI";
 //import { Link, useNavigate } from "react-router-dom";
 ///import { userLoginAPI } from "../Api/UserAPI/UserAPI";
 
-export default function Login({loginPage}) {
+export default function Login({loginPage,closeModal}) {
   //const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,19 +30,21 @@ export default function Login({loginPage}) {
   };
 
   const submitHandler = (e) => {
-    /*setLoader(true);
+    setLoader(true);
     e.preventDefault();
     userLoginAPI(formData).then((res) => {
       if (res.status === 200) {
         setLoader(false);
         localStorage.setItem("user_id", res?.data?.data?.user_id);
-        navigate("/leaderboard");
+        localStorage.setItem("token", res?.data?.data?.token);
+        //navigate("/leaderboard");
         localStorage.setItem("isLogin", true);
+        closeModal();
       } else {
         setLoader(false);
         toast(res?.response?.data?.message);
       }
-    });*/
+    });
   };
 
   return (

@@ -74,7 +74,7 @@ export default function Header() {
               className="w-8 h-8 cursor-pointer"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-              onClick={openModal}
+              //onClick={openModal}
             >
               <path
                 fill-rule="evenodd"
@@ -97,7 +97,7 @@ export default function Header() {
             <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
               <div class="relative transform overflow-hidden rounded-lg text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 {isLoginPage ? (
-                  <Login loginPage={loginPage} />
+                  <Login loginPage={loginPage} closeModal={closeModal}/>
                 ) : (
                   <Register loginPage={loginPage} />
                 )}

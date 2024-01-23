@@ -1,5 +1,23 @@
-// collaborative-doc-editor-server/index.js
-const express = require("express");
+/*const express = require("express");
+
+require("dotenv").config();
+
+const port = process.env.PORT || 5174;
+
+const mongoose = require("mongoose");
+
+if (process.env.DATABASE === "MONGODBATLAS") {
+  mongoose.connect(process.env.DATABASEURL);
+  mongoose.connection.on("error", (err) => {
+    console.log("Connection Failed");
+  });
+  mongoose.connection.on("connected", (connected) => {
+    console.log("Connected to MongoDB Atlas.");
+  });
+} else {
+  console.log("No proper ENV.");
+}
+
 const http = require("http");
 const socketIo = require("socket.io");
 
@@ -20,11 +38,63 @@ io.on("connection", (socket) => {
   });
 });
 
+const userRoutes = require("./routes/userRoute");
+
+app.use("/", userRoutes);
+
+const cors = require("cors");
+
+let allowedOrigins = ["http://localhost:5173"];
+
+app.use(
+  cors({
+    credentials: true,
+    origin: allowedOrigins,
+  })
+);
+
+server.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});*/
+
+/*
+
+D0YetokoWskaiRqM
+shmall212020
+
+*/
+
+var express = require("express");
+
+const cookieParser = require("cookie-parser");
+var app = express();
+
+require("dotenv").config();
+
+const port = process.env.PORT || 5174;
+
+const mongoose = require("mongoose");
+
+if (process.env.DATABASE === "MONGODBATLAS") {
+  mongoose.connect(process.env.DATABASEURL);
+  mongoose.connection.on("error", (err) => {
+    console.log("Connection Failed");
+  });
+  mongoose.connection.on("connected", (connected) => {
+    console.log("Connected to MongoDB Atlas.");
+  });
+} else {
+  console.log("No proper ENV.");
+}
+
+app.use(cookieParser());
+
+app.use(express.json()); 
+
 const cors = require("cors");
 
 let allowedOrigins = [
   "http://localhost:5173",
-  "https://language-learning-game-five.vercel.app",
 ];
 
 app.use(
@@ -34,7 +104,9 @@ app.use(
   })
 );
 
-const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+const userRoutes = require("./routes/userRoute");
+
+app.use("/", userRoutes);
+
+app.listen(port);
+
