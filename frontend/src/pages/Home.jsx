@@ -1,20 +1,34 @@
 import React, { useEffect, useState } from "react";
 import Header from "../partials/Header";
+import { useNavigate } from "react-router-dom";
+import { addDocumentAPI } from "../Api/DocumentAPI/DocumentAPI";
 
 export default function () {
   const user_id = localStorage.getItem("user_id");
 
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    text: "",
-    user_id: "",
+    name: "",
+    content: "",
   });
 
+  const [loader, setLoader] = useState(false);
+
+  const onChangeHandler = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const createNewDocument = (e) => {
-    //setLoader(true);
+    setLoader(true);
     e.preventDefault();
     addDocumentAPI(formData).then((res) => {
       if (res.status === 201) {
-        //setLoader(false);
+        setLoader(false);
+        navigate(`/newdocument/${res?.data?.data?._id}`);
       } else {
         setLoader(false);
         toast(res?.response?.data?.message);
@@ -22,18 +36,18 @@ export default function () {
     });
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (user_id) {
       setFormData({ ...formData, user_id: user_id });
     }
-  }, [user_id]);
+  }, [user_id]);*/
 
   return (
     <>
       <Header />
       <section className="bg-gray-80 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div className="w-full bg-white rounded-lg shadow-md dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-600 md:text-2xl dark:text-white">
                 Create New Document
@@ -48,21 +62,45 @@ export default function () {
                   </label>
                   <input
                     type="text"
-                    name="documentname"
-                    id="documentname"
-                    //onChange={onChangeHandler}
-                    //value={formData.email}
+                    name="name"
+                    id="name"
+                    onChange={onChangeHandler}
+                    value={formData.name}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Document Name"
                     required={true}
                   />
                 </div>
 
-                {false ? (
+                <div>
+                  <label
+                    htmlFor="documentname"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Give Access
+                  </label>
+                  <select
+                    type="text"
+                    name="language"
+                    id="language"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    //required
+                    //onChange={(e) => handleLevelChange(e)}
+                    //value={level}
+                  >
+                    <option disabled>Select Level</option>
+                    <option value="all">All Level</option>
+                    <option value="easy">Easy</option>
+                    <option value="moderate">Moderate</option>
+                    <option value="hard">Hard</option>
+                  </select>
+                </div>
+
+                {loader ? (
                   <button
                     disabled=""
                     type="button"
-                    className="w-full text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                    className="w-full text-whitebg-teal-500 hover:bg-teal-600 focus:ring-4 focus:outline-none focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                   >
                     <svg
                       aria-hidden="true"

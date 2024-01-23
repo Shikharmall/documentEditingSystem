@@ -4,17 +4,16 @@ const Document = require("../../models/Document/documentModel");
 
 const addDocument = async (req, res) => {
   try {
-    const { content } = req.body;
+    const { name, content } = req.body;
 
     const documentData = new Document({
+      name: name,
       content: content,
     });
     const documentAdded = await documentData.save();
 
     if (documentAdded) {
-      return res
-        .status(201)
-        .json({ status: "success", message: "Document Added Successfully." });
+      return res.status(201).json({ status: "success", data: documentAdded });
     }
   } catch (error) {
     res.status(500).json({ status: "failed", message: error.message });

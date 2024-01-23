@@ -2,9 +2,13 @@ const mongoose = require("mongoose");
 
 const documentSchema = new mongoose.Schema(
   {
-    content: {
+    name: {
       type: String,
       required: true,
+    },
+    content: {
+      type: String,
+      //required: true,
     },
   },
   {

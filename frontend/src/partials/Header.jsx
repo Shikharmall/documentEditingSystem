@@ -23,8 +23,6 @@ export default function Header() {
     }
   }, []);
 
- 
-
   const [isLoginPage, setIsLoginPage] = useState(true);
 
   const location = useLocation();
@@ -33,7 +31,6 @@ export default function Header() {
   const loginPage = () => {
     setIsLoginPage(!isLoginPage);
   };
-
 
   return (
     <>
@@ -72,7 +69,7 @@ export default function Header() {
             <Link
               to={{ pathname: `/document/:document_id` }}
               className={`block mt-4 lg:inline-block lg:mt-0 mr-4 ${
-                pathname.includes("/document/")
+                pathname.includes("/alldocument/")
                   ? "text-white hover:text-teal-200"
                   : "text-teal-200"
               }`}
@@ -84,26 +81,20 @@ export default function Header() {
           {pathname.includes("document") ? (
             <div>
               <div class="flex -space-x-4 rtl:space-x-reverse">
-                <img
-                  class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                  src="/docs/images/people/profile-picture-5.jpg"
-                  alt=""
-                />
-                <img
-                  class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                  src="/docs/images/people/profile-picture-2.jpg"
-                  alt=""
-                />
-                <img
-                  class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                  src="/docs/images/people/profile-picture-3.jpg"
-                  alt=""
-                />
+                <a class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800 flex justify-center items-center bg-teal-400">
+                  SM
+                </a>
+                <a class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800 flex justify-center items-center bg-teal-600">
+                  AK
+                </a>
+                <a class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800 flex justify-center items-center bg-green-500">
+                  SG
+                </a>
                 <a
                   class="flex items-center justify-center w-10 h-10 text-xs font-medium text-white bg-gray-700 border-2 border-white rounded-full hover:bg-gray-600 dark:border-gray-800"
                   href="#"
                 >
-                  +99
+                  +1
                 </a>
               </div>
             </div>
