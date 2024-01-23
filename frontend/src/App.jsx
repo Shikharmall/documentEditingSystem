@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import NewDocument from "./pages/NewDocument";
 import TextEditor from "./pages/TextEditor";
 import NoPage from "./pages/NoPage";
+import Home from "./pages/Home";
 
 function App() {
   const location = useLocation();
@@ -15,7 +16,8 @@ function App() {
 
   return (
     <Routes>
-      <Route exact path="/" element={<NewDocument />} />
+      <Route exact path="/" element={<Home />} />
+      <Route exact path="/newdocument/:document_id" element={<NewDocument />} />
       <Route exact path="/document/:document_id" element={<TextEditor />} />
       <Route exact path="/alldocuments/:document_id" element={<TextEditor />} />
       <Route path="*" element={<NoPage />} />
