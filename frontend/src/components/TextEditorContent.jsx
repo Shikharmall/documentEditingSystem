@@ -53,17 +53,22 @@ const TextEditorContent = () => {
 
     ["clean"], // remove formatting button
   ];
+
   const module = {
     toolbar: toolbarOptions,
   };
 
   return (
-    <Quill
-      modules={module}
-      value={text}
-      onChange={handleTextChange}
-      //readOnly={true}
-    />
+    <>
+      <Quill
+        modules={module}
+        value={text}
+        onChange={handleTextChange}
+        //readOnly={true}
+      />
+
+      
+    </>
   );
 };
 

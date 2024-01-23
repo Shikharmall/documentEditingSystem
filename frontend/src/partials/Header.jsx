@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
 
 export default function Header() {
+  const [loader, setLoader] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
+  const [isLoginPage, setIsLoginPage] = useState(true);
+
+  const loginPage = () => {
+    setIsLoginPage(!isLoginPage);
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <>
-      <nav className="flex items-center justify-between bg-teal-500 p-6">
+      <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
         <div className="flex items-center flex-shrink-0 text-white mr-6">
           <svg
             className="fill-current h-8 w-8 mr-2 text-white"
@@ -23,14 +41,40 @@ export default function Header() {
             Document Editing System
           </span>
         </div>
+        {/*<div className="block lg:hidden">
+          <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
+            <svg
+              className="fill-current h-3 w-3"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>Menu</title>
+              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+            </svg>
+          </button>
+        </div>*/}
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto ">
-          <div className="text-sm lg:flex-grow"></div>
+          <div className="text-sm lg:flex-grow">
+            <a
+              href="#responsive-header"
+              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+            >
+              New Docs
+            </a>
+            <a
+              href="#responsive-header"
+              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+            >
+              All Documents
+            </a>
+          </div>
           <div>
             <svg
               fill="#ffffff"
               className="w-8 h-8 cursor-pointer"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
+              onClick={openModal}
             >
               <path
                 fill-rule="evenodd"
@@ -40,6 +84,28 @@ export default function Header() {
           </div>
         </div>
       </nav>
+      {isModalOpen && (
+        <div
+          class="relative z-10"
+          aria-labelledby="modal-title"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+          <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <div class="relative transform overflow-hidden rounded-lg text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                {isLoginPage ? (
+                  <Login loginPage={loginPage} />
+                ) : (
+                  <Register loginPage={loginPage} />
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
