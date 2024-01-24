@@ -72,7 +72,7 @@ export default function () {
     addDocumentAPI(formData).then((res) => {
       if (res.status === 201) {
         setLoader(false);
-        navigate(`/newdocument/${res?.data?.data?._id}`);
+        navigate(`/document/${res?.data?.data?._id}`);
       } else {
         setLoader(false);
         console.log(res?.response?.data?.message);

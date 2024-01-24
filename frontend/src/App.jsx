@@ -6,7 +6,6 @@ import NoPage from "./pages/NoPage";
 import Home from "./pages/Home";
 import AllDocuments from "./pages/AllDocuments";
 
-
 function App() {
   const location = useLocation();
 
@@ -20,8 +19,7 @@ function App() {
     <Routes>
       <Route exact path="/" element={<Home />} />
       <Route exact path="/alldocuments" element={<AllDocuments />} />
-      <Route exact path="/newdocument/:document_id" element={<NewDocument />} />
-      <Route exact path="/document/:document_id" element={<TextEditor />} />
+      <Route exact path="/document/:document_id" element={<NewDocument />} />
       <Route exact path="/alldocuments/:document_id" element={<TextEditor />} />
       <Route path="*" element={<NoPage />} />
     </Routes>
