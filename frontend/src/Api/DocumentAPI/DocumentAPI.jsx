@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL_BASE } from "../../utils/apiURL";
 
-// API for adding document  
+// API for adding document
 
 export const addDocumentAPI = async (data) => {
   console.log(data);
@@ -72,17 +72,13 @@ export const editDocumentAPI = async (data) => {
   }
 };
 
-// API for getting document details
+// API for getting all document details
 
-export const getDocumentDetailsAPI = async (data) => {
+export const getAllDocumentDetailsAPI = async () => {
   try {
-    let result = await axios(`${API_URL_BASE}/editDocument`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    let result = await axios(`${API_URL_BASE}/getAllDocument`, {
+      method: "GET",
       withCredentials: true,
-      data: data,
     });
     return result;
   } catch (error) {

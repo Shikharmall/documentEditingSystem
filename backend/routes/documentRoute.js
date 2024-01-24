@@ -15,11 +15,19 @@ document_route.use(bodyParser.urlencoded({ extended: true }));
 
 document_route.post("/addDocument", isLogin, documentController.addDocument);
 
-// api for fetching document assign
+// api for fetching particular document
 
 document_route.get("/fetchDocument", isLogin, documentController.getDocument);
 
-// api for fetching document
+// api for fetching all document
+
+document_route.get(
+  "/getAllDocument",
+  isLogin,
+  documentController.getAllDocument
+);
+
+// api for fetching particular document assign
 
 document_route.get(
   "/getDocumentAssign",

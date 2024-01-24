@@ -52,6 +52,20 @@ const getDocument = async (req, res) => {
   }
 };
 
+//get all document
+
+const getAllDocument = async (req, res) => {
+  try {
+    const documentData = await Document.find().sort({createdAt:-1});
+
+    if (documentData) {
+      return res.status(200).json({ status: "success", data: documentData });
+    }
+  } catch (error) {
+    res.status(500).json({ status: "failed", message: error.message });
+  }
+};
+
 //get document assign
 
 const getDocumentAssign = async (req, res) => {
@@ -136,10 +150,10 @@ const editDocument = async (req, res) => {
   }
 };
 
-
 module.exports = {
   addDocument,
   getDocument,
+  getAllDocument,
   editDocument,
   getDocumentAssign,
   validDocumentAssign,
