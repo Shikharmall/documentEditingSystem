@@ -75,7 +75,7 @@ export default function () {
         navigate(`/newdocument/${res?.data?.data?._id}`);
       } else {
         setLoader(false);
-        toast(res?.response?.data?.message);
+        console.log(res?.response?.data?.message);
       }
     });
   };

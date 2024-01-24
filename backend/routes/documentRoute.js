@@ -18,9 +18,13 @@ document_route.use(bodyParser.urlencoded({ extended: true }));
 
 document_route.post("/addDocument", documentController.addDocument);
 
-// api for fetching document
+// api for fetching document assign
 
 document_route.get("/fetchDocument", documentController.getDocument);
+
+// api for fetching document
+
+document_route.get("/getDocumentAssign", documentController.getDocumentAssign);
 
 // api for editing document
 

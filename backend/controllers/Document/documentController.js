@@ -1,20 +1,33 @@
 const Document = require("../../models/Document/documentModel");
+const DocumentAssign = require("../../models/Document/documentAssignModel");
 
 //add document
 
 const addDocument = async (req, res) => {
   try {
-    const { name, content, owner_id } = req.body;
+    const { name, content, owner_id, userIDs } = req.body;
 
     const documentData = new Document({
       name: name,
       content: content,
       owner_id: owner_id,
     });
+
     const documentAdded = await documentData.save();
 
     if (documentAdded) {
-      return res.status(201).json({ status: "success", data: documentAdded });
+      const assignIDPromises = userIDs.map(async (obj) => {
+        const assignIDData = new DocumentAssign({
+          document_id: documentAdded._id,
+          user_id: obj,
+        });
+        await assignIDData.save();
+      });
+
+      const assignData = await Promise.all(assignIDPromises);
+      if (assignData) {
+        return res.status(201).json({ status: "success", data: documentAdded });
+      }
     }
   } catch (error) {
     res.status(500).json({ status: "failed", message: error.message });
@@ -31,6 +44,26 @@ const getDocument = async (req, res) => {
 
     if (documentData) {
       return res.status(200).json({ status: "success", data: documentData });
+    }
+  } catch (error) {
+    res.status(500).json({ status: "failed", message: error.message });
+  }
+};
+
+//get document assign
+
+const getDocumentAssign = async (req, res) => {
+  try {
+    const { document_id } = req.query;
+
+    const documentAssignData = await DocumentAssign.find({
+      document_id: document_id,
+    }).populate("user_id", "name");
+
+    if (documentAssignData) {
+      return res
+        .status(200)
+        .json({ status: "success", data: documentAssignData });
     }
   } catch (error) {
     res.status(500).json({ status: "failed", message: error.message });
@@ -215,6 +248,7 @@ module.exports = {
   addDocument,
   getDocument,
   editDocument,
+  getDocumentAssign,
   /*getQuestion,
   getAllQuestions,
   getQuestionByID,

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Header from "../partials/Header";
 import TextEditorContent from "../components/TextEditorContent";
+import DocumentHeader from "../partials/DocumentHeader";
 
 export default function NewDocument() {
   return (
     <>
-      <Header />
+      <DocumentHeader />
       <TextEditorContent />
     </>
   );
