@@ -15,7 +15,7 @@ const app = express();
 
 const server = createServer(app);
 
-let allowedOrigins = ["http://localhost:5173"];
+let allowedOrigins = ["http://localhost:5173","https://document-editing-system.vercel.app"];
 
 const io = new Server(server, {
   cors: {
