@@ -1,9 +1,7 @@
 var express = require("express");
 var user_route = express();
 
-//const isDDAdmin = require("../middleware/isVerified");
-
-//const isLogin = require("../middleware/isLogin");
+const isLogin = require("../middleware/isLogin");
 
 const userController = require("../controllers/User/userController");
 //const questionController = require("../controllers/Document/documentController");
@@ -24,10 +22,10 @@ user_route.post("/login", userController.loginUser);
 
 // api for logout
 
-user_route.post("/logout", userController.logout);
+user_route.post("/logout", isLogin, userController.logout);
 
 // api for getting all users
 
-user_route.get("/getAllUserDetails", /*isLogin,*/ userController.getAllUserDetails);
+user_route.get("/getAllUserDetails", isLogin, userController.getAllUserDetails);
 
 module.exports = user_route;

@@ -98,7 +98,6 @@ const TextEditorContent = ({ assignedData, recall }) => {
       //setlinkText(window.location.href);
     }
   }, [assignedData]);
-  console.log(assignedData);
 
   useEffect(() => {
     socket.on("connect", () => {
