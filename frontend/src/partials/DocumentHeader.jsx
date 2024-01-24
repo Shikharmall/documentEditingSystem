@@ -55,8 +55,6 @@ export default function DocumentHeader() {
     }
   }, [document_id]);
 
-  console.log(data);
-
   return (
     <>
       <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
@@ -92,7 +90,6 @@ export default function DocumentHeader() {
               New Docs
             </Link>
             <Link
-              to={{ pathname: `/document/:document_id` }}
               className={`block mt-4 lg:inline-block lg:mt-0 mr-4 ${
                 pathname.includes("/alldocument/")
                   ? "text-white hover:text-teal-200"
@@ -105,10 +102,13 @@ export default function DocumentHeader() {
 
           {pathname.includes("document") ? (
             <div>
-              <div class="flex -space-x-4 rtl:space-x-reverse">
+              <div class="flex -space-x-4 rtl:space-x-reverse mr-3">
                 {data &&
                   data.map((item, index) => (
-                    <a class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800 flex justify-center items-center bg-teal-400 uppercase">
+                    <a
+                      class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800 flex justify-center items-center bg-teal-400 uppercase"
+                      key={index}
+                    >
                       {item?.user_id?.name?.substring(0, 2)}
                     </a>
                   ))}

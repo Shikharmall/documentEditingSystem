@@ -72,50 +72,20 @@ export const editDocumentAPI = async (data) => {
   }
 };
 
-// API for getting user details
-/*
-export const getUserDetailsAPI = async (user_id) => {
-  try {
-    let result = await axios(
-      `${API_URL_BASE}/getUserDetails?user_id=${user_id}`,
-      {
-        method: "GET",
-        withCredentials: true,
-      }
-    );
-    return result;
-  } catch (error) {
-    return error;
-  }
-};
+// API for getting document details
 
-// API for getting all users details
-
-export const getAllUsersDetailsAPI = async () => {
+export const getDocumentDetailsAPI = async (data) => {
   try {
-    let result = await axios(`${API_URL_BASE}/getAllUserDetails`, {
-      method: "GET",
+    let result = await axios(`${API_URL_BASE}/editDocument`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       withCredentials: true,
+      data: data,
     });
     return result;
   } catch (error) {
     return error;
   }
 };
-
-// API for getting all users details by language
-
-export const getAllUserDetailsByLanguageAPI = async (language) => {
-  try {
-    let result = await axios(
-      `${API_URL_BASE}/getAllUserDetailsByLanguage?language=${language}`,
-      {
-        method: "GET",
-        withCredentials: true,
-      }
-    );
-    return result;
-  } catch (error) {
-    return error;
-  }
-};*/

@@ -26,6 +26,13 @@ document_route.get("/fetchDocument", documentController.getDocument);
 
 document_route.get("/getDocumentAssign", documentController.getDocumentAssign);
 
+// api for valid document assign
+
+document_route.get(
+  "/validDocumentAssign",
+  documentController.validDocumentAssign
+);
+
 // api for editing document
 
 document_route.post("/editDocument", documentController.editDocument);

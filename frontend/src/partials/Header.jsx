@@ -67,9 +67,9 @@ export default function Header() {
               New Docs
             </Link>
             <Link
-              to={{ pathname: `/document/:document_id` }}
+              to={{ pathname: `/alldocuments` }}
               className={`block mt-4 lg:inline-block lg:mt-0 mr-4 ${
-                pathname.includes("/alldocument/")
+                pathname.includes("/alldocuments")
                   ? "text-white hover:text-teal-200"
                   : "text-teal-200"
               }`}
@@ -77,28 +77,6 @@ export default function Header() {
               All Docs
             </Link>
           </div>
-
-          {pathname.includes("document") ? (
-            <div>
-              <div class="flex -space-x-4 rtl:space-x-reverse">
-                <a class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800 flex justify-center items-center bg-teal-400">
-                  SM
-                </a>
-                <a class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800 flex justify-center items-center bg-teal-600">
-                  AK
-                </a>
-                <a class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800 flex justify-center items-center bg-green-500">
-                  SG
-                </a>
-                <a
-                  class="flex items-center justify-center w-10 h-10 text-xs font-medium text-white bg-gray-700 border-2 border-white rounded-full hover:bg-gray-600 dark:border-gray-800"
-                  href="#"
-                >
-                  +1
-                </a>
-              </div>
-            </div>
-          ) : null}
 
           <div>
             <svg

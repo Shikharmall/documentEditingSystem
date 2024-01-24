@@ -4,6 +4,8 @@ import NewDocument from "./pages/NewDocument";
 import TextEditor from "./pages/TextEditor";
 import NoPage from "./pages/NoPage";
 import Home from "./pages/Home";
+import AllDocuments from "./pages/AllDocuments";
+
 
 function App() {
   const location = useLocation();
@@ -17,6 +19,7 @@ function App() {
   return (
     <Routes>
       <Route exact path="/" element={<Home />} />
+      <Route exact path="/alldocuments" element={<AllDocuments />} />
       <Route exact path="/newdocument/:document_id" element={<NewDocument />} />
       <Route exact path="/document/:document_id" element={<TextEditor />} />
       <Route exact path="/alldocuments/:document_id" element={<TextEditor />} />

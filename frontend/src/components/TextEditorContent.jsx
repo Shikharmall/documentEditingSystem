@@ -1,19 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Quill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { addDocumentAPI } from "../Api/DocumentAPI/DocumentAPI";
+import { editDocumentAPI } from "../Api/DocumentAPI/DocumentAPI";
 import ShareLink from "./ShareLink";
-//import io from "socket.io-client";
-//const socket = io("http://localhost:5000"); // Replace with your server URL
 
-const TextEditorContent = () => {
+import { io } from "socket.io-client";
+import { API_URL_BASE } from "../utils/apiURL";
+import { useParams } from "react-router-dom";
+
+const TextEditorContent = ({ assignedData, recall }) => {
+  const socket = useMemo(() => io(`${API_URL_BASE}`), []);
+  //io("http://localhost:5174");
   const user_id = localStorage.getItem("user_id");
+  const { document_id } = useParams();
   const [userId, setUserId] = useState("");
   const [formData, setFormData] = useState({
-    text: "",
-    user_id: "",
+    content: "",
+    document_id: "",
   });
   const [loader, setLoader] = useState(false);
 
@@ -28,24 +33,6 @@ const TextEditorContent = () => {
   const closeShareLink = () => {
     setIsShareLinkOpen(false);
   };
-
-  /* useEffect(() => {
-    // Listen for text updates from the server
-    socket.on("text-update", (data) => {
-      setText(data);
-    });
-
-    return () => {
-      socket.off("text-update");
-    };
-  }, []);*/
-
-  /*const handleTextChange = (content, _, source) => {
-    if (source === "user") {
-      // Send text updates to the server
-      socket.emit("text-update", content);
-    }
-  };*/
 
   var toolbarOptions = [
     ["bold", "italic", "underline", "strike"], // toggled buttons
@@ -74,16 +61,17 @@ const TextEditorContent = () => {
   const handleTextChange = (content, delta, source, editor) => {
     // Handle text changes here
     //setText(content);
+    socket.emit("text-update", content);
     setFormData({ ...formData, content: content });
   };
 
-  const submitHandler = (e) => {
+  const saveData = (e) => {
     setLoader(true);
     e.preventDefault();
-    addDocumentAPI(formData).then((res) => {
+    editDocumentAPI(formData).then((res) => {
       if (res.status === 201) {
         setLoader(false);
-        setFormData({ ...formData, content: "" });
+        recall();
       } else {
         setLoader(false);
         toast(res?.response?.data?.message);
@@ -93,13 +81,39 @@ const TextEditorContent = () => {
 
   useEffect(() => {
     if (user_id) {
-      setFormData({ ...formData, user_id: user_id });
       setUserId(user_id);
-      setlinkText(window.location.href);
     }
   }, [user_id]);
 
-  console.log(formData);
+  useEffect(() => {
+    if (document_id) {
+      setFormData({ ...formData, document_id: document_id });
+      setlinkText(window.location.href);
+    }
+  }, [document_id]);
+
+  useEffect(() => {
+    if (assignedData) {
+      setFormData({ ...formData, content: assignedData });
+      //setlinkText(window.location.href);
+    }
+  }, [assignedData]);
+  console.log(assignedData);
+
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("User connected:", socket.id);
+    });
+    socket.on("text-update", (data) => {
+      console.log(data);
+      setFormData({ ...formData, content: data });
+    });
+    return () => {
+      socket.off("text-update");
+    };
+  }, []);
+
+  //console.log(formData);
 
   return (
     <>
@@ -111,13 +125,30 @@ const TextEditorContent = () => {
         //readOnly={true}
       />
       <div className="flex items-end justify-end p-6">
+        {loader ? (
+          <button
+            type="submit"
+            className="text-white bg-teal-500 hover:bg-teal-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex justify-center items-center m-1"
+            //onClick={saveData}
+          >
+            Saving....
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="text-white bg-teal-500 hover:bg-teal-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex justify-center items-center m-1"
+            onClick={saveData}
+          >
+            Save
+          </button>
+        )}
         <button
           type="submit"
-          className="text-white bg-teal-500 hover:bg-teal-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex justify-center items-center"
+          className="text-white bg-teal-500 hover:bg-teal-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex justify-center items-center m-1"
           onClick={openShareLink}
         >
           <svg
-            className="w-4 h-4 m-1 mr-2"
+            className="w-4 h-4 mr-2"
             viewBox="0 0 15 15"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
