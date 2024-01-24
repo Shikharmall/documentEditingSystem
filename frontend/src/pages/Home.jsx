@@ -2,23 +2,67 @@ import React, { useEffect, useState } from "react";
 import Header from "../partials/Header";
 import { useNavigate } from "react-router-dom";
 import { addDocumentAPI } from "../Api/DocumentAPI/DocumentAPI";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+import { getAllUsersDetailsAPI } from "../Api/UserAPI/UserAPI";
 
 export default function () {
-  const user_id = localStorage.getItem("user_id");
+  const owner_id = localStorage.getItem("user_id");
 
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
     content: "",
+    owner_id: "",
+    userIDs: [],
   });
 
   const [loader, setLoader] = useState(false);
+
+  const [options, setOptions] = useState([{ value: "", label: "" }]);
+
+  const allUserFunc = () => {
+    try {
+      getAllUsersDetailsAPI().then((res) => {
+        if (res.status === 200) {
+          const apiUsers = res?.data?.data;
+
+          const filteredUsers = apiUsers.filter(
+            (user) => user._id !== owner_id
+          );
+
+          const updatedOptions = filteredUsers.map((user) => ({
+            value: user._id,
+            label: user.name,
+          }));
+
+          setOptions(updatedOptions);
+        } else {
+          console.log("error");
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    allUserFunc();
+  }, []);
 
   const onChangeHandler = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSelectChange = (selected) => {
+    const selectedValuesArray = selected.map((option) => option.value);
+    setFormData({
+      ...formData,
+      userIDs: selectedValuesArray,
     });
   };
 
@@ -36,11 +80,13 @@ export default function () {
     });
   };
 
-  /*useEffect(() => {
-    if (user_id) {
-      setFormData({ ...formData, user_id: user_id });
+  const animatedComponents = makeAnimated();
+
+  useEffect(() => {
+    if (owner_id) {
+      setFormData({ ...formData, owner_id: owner_id });
     }
-  }, [user_id]);*/
+  }, [owner_id]);
 
   return (
     <>
@@ -79,21 +125,17 @@ export default function () {
                   >
                     Give Access
                   </label>
-                  <select
-                    type="text"
-                    name="language"
-                    id="language"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    //required
-                    //onChange={(e) => handleLevelChange(e)}
-                    //value={level}
-                  >
-                    <option disabled>Select Level</option>
-                    <option value="all">All Level</option>
-                    <option value="easy">Easy</option>
-                    <option value="moderate">Moderate</option>
-                    <option value="hard">Hard</option>
-                  </select>
+                  <Select
+                    closeMenuOnSelect={false}
+                    components={animatedComponents}
+                    isMulti
+                    placeholder="Select User"
+                    options={options}
+                    value={options.filter((option) =>
+                      formData.userIDs.includes(option.value)
+                    )}
+                    onChange={handleSelectChange}
+                  />
                 </div>
 
                 {loader ? (

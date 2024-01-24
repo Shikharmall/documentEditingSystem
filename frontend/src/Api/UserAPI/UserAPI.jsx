@@ -74,7 +74,7 @@ export const getUserDetailsAPI = async (user_id) => {
   } catch (error) {
     return error;
   }
-};
+};*/
 
 // API for getting all users details
 
@@ -90,6 +90,7 @@ export const getAllUsersDetailsAPI = async () => {
   }
 };
 
+/*
 // API for getting all users details by language
 
 export const getAllUserDetailsByLanguageAPI = async (language) => {

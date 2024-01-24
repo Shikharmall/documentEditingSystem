@@ -4,11 +4,12 @@ const Document = require("../../models/Document/documentModel");
 
 const addDocument = async (req, res) => {
   try {
-    const { name, content } = req.body;
+    const { name, content, owner_id } = req.body;
 
     const documentData = new Document({
       name: name,
       content: content,
+      owner_id: owner_id,
     });
     const documentAdded = await documentData.save();
 

@@ -26,4 +26,8 @@ user_route.post("/login", userController.loginUser);
 
 user_route.post("/logout", /*isLogin,*/ userController.logout);
 
+// api for getting all users
+
+user_route.get("/getAllUserDetails", /*isLogin,*/ userController.getAllUserDetails);
+
 module.exports = user_route;
