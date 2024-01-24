@@ -39,6 +39,7 @@ export default function Login({ loginPage, closeModal }) {
         localStorage.setItem("token", res?.data?.data?.token);
         //navigate("/leaderboard");
         localStorage.setItem("isLogin", true);
+        window.location.reload();
         closeModal();
       } else {
         setLoader(false);
