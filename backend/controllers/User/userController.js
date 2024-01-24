@@ -128,6 +128,8 @@ const getUserDetails = async (req, res) => {
   }
 };
 
+//get all user details
+
 const getAllUserDetails = async (req, res) => {
   try {
     // Find the user by email

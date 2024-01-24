@@ -24,7 +24,7 @@ user_route.post("/login", userController.loginUser);
 
 // api for logout
 
-user_route.post("/logout", /*isLogin,*/ userController.logout);
+user_route.post("/logout", userController.logout);
 
 // api for getting all users
 

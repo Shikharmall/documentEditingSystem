@@ -23,7 +23,7 @@ export const userLoginAPI = async (data) => {
 
 // API for user logout
 
-export const userLogoutAPI = async (data) => {
+export const userLogoutAPI = async () => {
   try {
     let result = await axios(`${API_URL_BASE}/logout`, {
       method: "POST",
@@ -59,23 +59,6 @@ export const userRegisterAPI = async (data) => {
   }
 };
 
-// API for getting user details
-/*
-export const getUserDetailsAPI = async (user_id) => {
-  try {
-    let result = await axios(
-      `${API_URL_BASE}/getUserDetails?user_id=${user_id}`,
-      {
-        method: "GET",
-        withCredentials: true,
-      }
-    );
-    return result;
-  } catch (error) {
-    return error;
-  }
-};*/
-
 // API for getting all users details
 
 export const getAllUsersDetailsAPI = async () => {
@@ -90,20 +73,4 @@ export const getAllUsersDetailsAPI = async () => {
   }
 };
 
-/*
-// API for getting all users details by language
 
-export const getAllUserDetailsByLanguageAPI = async (language) => {
-  try {
-    let result = await axios(
-      `${API_URL_BASE}/getAllUserDetailsByLanguage?language=${language}`,
-      {
-        method: "GET",
-        withCredentials: true,
-      }
-    );
-    return result;
-  } catch (error) {
-    return error;
-  }
-};*/
