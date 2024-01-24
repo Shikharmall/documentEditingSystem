@@ -20,4 +20,4 @@
      Login and register page for user
      Create new document with access to others users register in this document editing system and can also create its link.
      Also editing would be reflected to others.
-     See all generate document.
+     See all generated document.
