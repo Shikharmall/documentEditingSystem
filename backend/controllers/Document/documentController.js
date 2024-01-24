@@ -56,7 +56,7 @@ const getDocument = async (req, res) => {
 
 const getAllDocument = async (req, res) => {
   try {
-    const documentData = await Document.find().sort({createdAt:-1});
+    const documentData = await Document.find().sort({ createdAt: -1 });
 
     if (documentData) {
       return res.status(200).json({ status: "success", data: documentData });
@@ -107,17 +107,10 @@ const validDocumentAssign = async (req, res) => {
       document_id: document_id,
     });
 
-    console.log("assignedDocuments:", assignedDocuments);
-
     if (assignedDocuments && assignedDocuments.length > 0) {
-      return res
-        .status(200)
-        .json({ status: "success", data: assignedDocuments });
+      return res.status(200).json({ status: "success", data: true });
     } else {
-      return res.status(404).json({
-        status: "not found",
-        message: "No assigned documents found for the user.",
-      });
+      return res.status(200).json({ status: "success", data: false });
     }
   } catch (error) {
     console.error("Error in getDocumentsByUserId:", error);

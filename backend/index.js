@@ -65,7 +65,7 @@ app.use("/", documentRoutes);
 //app.listen(port);
 
 io.on("connection", async (socket) => {
-  console.log("User connected:", socket.id);
+  //console.log("User connected:", socket.id);
 
   socket.on("text-update", (data) => {
     // Broadcast the text update to all connected clients except the sender
@@ -82,7 +82,7 @@ io.on("connection", async (socket) => {
   });*/
 
   socket.on("disconnect", () => {
-    console.log("User disconnected:", socket.id);
+    //console.log("User disconnected:", socket.id);
   });
 });
 

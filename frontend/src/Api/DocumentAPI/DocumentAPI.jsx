@@ -85,3 +85,20 @@ export const getAllDocumentDetailsAPI = async () => {
     return error;
   }
 };
+
+// API for checking document assign to given is valid or not
+
+export const validDocumentAssignAPI = async (document_id, user_id) => {
+  try {
+    let result = await axios(
+      `${API_URL_BASE}/validDocumentAssign?document_id=${document_id}&user_id=${user_id}`,
+      {
+        method: "GET",
+        withCredentials: true,
+      }
+    );
+    return result;
+  } catch (error) {
+    return error;
+  }
+};

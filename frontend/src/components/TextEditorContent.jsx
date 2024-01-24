@@ -10,7 +10,7 @@ import { io } from "socket.io-client";
 import { API_URL_BASE } from "../utils/apiURL";
 import { useParams } from "react-router-dom";
 
-const TextEditorContent = ({ assignedData, recall }) => {
+const TextEditorContent = ({ assignedData, recall, isEditAccess }) => {
   const socket = useMemo(() => io(`${API_URL_BASE}`), []);
   //io("http://localhost:5174");
   const user_id = localStorage.getItem("user_id");
@@ -101,10 +101,10 @@ const TextEditorContent = ({ assignedData, recall }) => {
 
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("User connected:", socket.id);
+      //console.log("User connected:", socket.id);
     });
     socket.on("text-update", (data) => {
-      console.log(data);
+      //console.log(data);
       setFormData({ ...formData, content: data });
     });
     return () => {
@@ -121,7 +121,7 @@ const TextEditorContent = ({ assignedData, recall }) => {
         modules={module}
         value={formData.content}
         onChange={handleTextChange}
-        //readOnly={true}
+        readOnly={isEditAccess}
       />
       <div className="flex items-end justify-end p-6">
         {loader ? (
