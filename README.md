@@ -5,7 +5,7 @@
      Node JS, Express JS, Socket.IO, MongoDB Atlas
   ### Run Locally
      npm install
-     set environment (DATABASE = "MONGODBATLAS", DATABASEURL="confidential-ask-me")
+     set environment (DATABASE = "MONGODBATLAS", DATABASEURL="confidential-ask-me", CONFIG_SECRET_KEY ="confidential-ask-me")
      nodemon index.js
 
 ## Frontend
