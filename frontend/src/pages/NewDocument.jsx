@@ -59,6 +59,8 @@ export default function NewDocument() {
     }
   }, [document_id, user_id]);
 
+  console.log(isEditAccess);
+
   return (
     <>
       <DocumentHeader />

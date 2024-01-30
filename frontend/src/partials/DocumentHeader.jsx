@@ -135,7 +135,7 @@ export default function DocumentHeader() {
 
                 {data && data.length > 2 ? (
                   <a class="flex items-center justify-center w-10 h-10 text-xs font-medium text-white bg-gray-700 border-2 border-white rounded-full hover:bg-gray-600 dark:border-gray-800">
-                    {data.length - 2}+1
+                    {data.length - 2}+
                   </a>
                 ) : null}
               </div>

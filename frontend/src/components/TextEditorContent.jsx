@@ -117,30 +117,47 @@ const TextEditorContent = ({ assignedData, recall, isEditAccess }) => {
   return (
     <>
       <ToastContainer></ToastContainer>
-      <Quill
-        modules={module}
-        value={formData.content}
-        onChange={handleTextChange}
-        readOnly={isEditAccess}
-      />
+      {
+        isEditAccess
+        ?
+        <Quill
+          modules={module}
+          value={formData.content}
+          onChange={handleTextChange}
+          //readOnly={isEditAccess}
+        />
+        :
+        <Quill
+          modules={module}
+          value={formData.content}
+          onChange={handleTextChange}
+          readOnly={true}
+        />
+
+      }
       <div className="flex items-end justify-end p-6">
-        {loader ? (
-          <button
-            type="submit"
-            className="text-white bg-teal-500 hover:bg-teal-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex justify-center items-center m-1"
-            //onClick={saveData}
-          >
-            Saving....
-          </button>
-        ) : (
-          <button
-            type="submit"
-            className="text-white bg-teal-500 hover:bg-teal-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex justify-center items-center m-1"
-            onClick={saveData}
-          >
-            Save
-          </button>
-        )}
+        {isEditAccess ? (
+          <>
+            {loader ? (
+              <button
+                type="submit"
+                className="text-white bg-teal-500 hover:bg-teal-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex justify-center items-center m-1"
+                //onClick={saveData}
+              >
+                Saving....
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="text-white bg-teal-500 hover:bg-teal-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex justify-center items-center m-1"
+                onClick={saveData}
+              >
+                Save
+              </button>
+            )}
+          </>
+        ) : null}
+
         <button
           type="submit"
           className="text-white bg-teal-500 hover:bg-teal-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex justify-center items-center m-1"
