@@ -33,6 +33,7 @@ export default function NewDocument() {
       validDocumentAssignAPI(document_id, user_id).then((res) => {
         if (res.status === 200) {
           setIsEditAccess(res?.data?.data);
+          console.log(res);
         } else {
           console.log("error");
         }

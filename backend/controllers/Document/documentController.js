@@ -9,6 +9,8 @@ const addDocument = async (req, res) => {
   try {
     const { name, content, owner_id, userIDs } = req.body;
 
+    userIDs.push(owner_id);
+
     const documentData = new Document({
       name: name,
       content: content,
