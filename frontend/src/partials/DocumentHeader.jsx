@@ -124,7 +124,7 @@ export default function DocumentHeader() {
             <div>
               <div class="flex -space-x-4 rtl:space-x-reverse mr-3">
                 {data &&
-                  data.map((item, index) => (
+                  data.slice(0, 2).map((item, index) => (
                     <a
                       class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800 flex justify-center items-center bg-teal-400 uppercase"
                       key={index}
